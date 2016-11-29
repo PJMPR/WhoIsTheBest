@@ -1,6 +1,6 @@
 package model;
 
-public class Player {
+public class Player implements IHaveId {
 	private int id;
 	private String name;
 	private int age;

@@ -1,6 +1,6 @@
 package model;
 
-public class Team {
+public class Team  implements IHaveId{
 	private int id;
 	private String name;
 	private String country;

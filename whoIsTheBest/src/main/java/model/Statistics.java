@@ -1,6 +1,6 @@
 package model;
 
-public class Statistics {
+public class Statistics implements IHaveId {
 	private int id;
 	private int kills;
 	private int deaths;

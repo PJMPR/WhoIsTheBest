@@ -12,17 +12,26 @@ import model.Player;
 import model.Statistics;
 import model.Team;
 
+import dao.mappers.PlayerMapper;
+import dao.mappers.StatisticsMapper;
+import dao.mappers.TeamMapper;
+import dao.mappers.IMapResultSetIntoEntity;
+
 public class App 
 {
     public static void main( String[] args )
     {
-    	
     	String url = "jdbc:hsqldb:hsql://localhost/workdb";
     	try {
 			Connection connection = DriverManager.getConnection(url);
-			PlayerRepository playerRepo = new PlayerRepository(connection);
-			StatisticsRepository statisticsRepo = new StatisticsRepository(connection);
-			TeamRepository teamRepo = new TeamRepository(connection);
+			
+    		IMapResultSetIntoEntity<Player> playerMapper = new PlayerMapper();
+			IMapResultSetIntoEntity<Statistics> statisticsMapper = new StatisticsMapper();
+			IMapResultSetIntoEntity<Team> teamMapper = new TeamMapper();
+			
+			PlayerRepository playerRepo = new PlayerRepository(connection, playerMapper);
+			StatisticsRepository statisticsRepo = new StatisticsRepository(connection, statisticsMapper);
+			TeamRepository teamRepo = new TeamRepository(connection, teamMapper);
 			
 			Player shanger = new Player();
 			shanger.setName("Shanger");
@@ -36,9 +45,9 @@ public class App
 			
 			
 			Statistics stats = new Statistics();
-			stats.setKills(20);
+			stats.setKills(21);
 			stats.setDeaths(10);
-			stats.setKdRatio(2.00);
+			stats.setKdRatio(2.10); ////////////////////chce automatyczne wyliczenie kd z metody wlozyc do tabeli
 
 	        System.out.println( "Zapisuje statsy" );
 			statisticsRepo.add(stats);
@@ -47,7 +56,7 @@ public class App
 			Team frag = new Team();
 			frag.setName("FragNation");
 			frag.setCountry("Poland");
-
+			////////////////////////////////////////////id graczy do tabeli
 
 	        System.out.println( "Zapisuje team" );
 			teamRepo.add(frag);
