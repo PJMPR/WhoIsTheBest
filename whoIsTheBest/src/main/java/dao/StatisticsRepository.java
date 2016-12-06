@@ -2,14 +2,16 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.uow.IUnitOfWork;
 import model.Statistics;
 
-public class StatisticsRepository extends RepositoryBase<Statistics> {
+public class StatisticsRepository extends RepositoryBase<Statistics> implements IStatisticsRepository{
 	
-	public StatisticsRepository(Connection connection, IMapResultSetIntoEntity<Statistics> mapper) {
-		super(connection, mapper);
+	public StatisticsRepository(Connection connection, IMapResultSetIntoEntity<Statistics> mapper, IUnitOfWork uow) {
+		super(connection, mapper, uow);
 	}
 	
 	@Override
@@ -65,5 +67,10 @@ public class StatisticsRepository extends RepositoryBase<Statistics> {
 		update.setInt(2, entity.getDeaths());
 		update.setDouble(3, entity.getKdRatio());
 		update.setInt(4, entity.getId());	
+	}
+	
+	public List<Statistics> byId(Integer id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

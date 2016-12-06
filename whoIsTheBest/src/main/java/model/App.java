@@ -3,19 +3,11 @@ package model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-import dao.PlayerRepository;
-import dao.StatisticsRepository;
-import dao.TeamRepository;
+import java.util.List;
 
 import model.Player;
 import model.Statistics;
 import model.Team;
-
-import dao.mappers.PlayerMapper;
-import dao.mappers.StatisticsMapper;
-import dao.mappers.TeamMapper;
-import dao.mappers.IMapResultSetIntoEntity;
 
 import dao.IRepositoryCatalog;
 import dao.RepositoryCatalog;
@@ -28,7 +20,6 @@ public class App
     	String url = "jdbc:hsqldb:hsql://localhost/workdb";
     	try {
 			Connection connection = DriverManager.getConnection(url);
-			
 			IRepositoryCatalog catalog = new RepositoryCatalog(new UnitOfWork(connection), connection);
 			
 			Player shanger = new Player();
@@ -40,8 +31,11 @@ public class App
 			shanger.setPlayerStatistics(0);
 			shanger.setTeamId(0);
 
-	        System.out.println( "Zapisuje Shangera" );
 			catalog.player().add(shanger);
+			
+			List<Player> player = catalog.player().byTeam("fragnation");
+			
+			System.out.println( "Zapisuje Shangera" );
 			
 			Player lockjaw = new Player();
 			lockjaw.setName("Lockjaw");
@@ -52,34 +46,50 @@ public class App
 			lockjaw.setPlayerStatistics(1);
 			lockjaw.setTeamId(0);
 
-	        System.out.println( "Zapisuje Lockjawa" );
 			catalog.player().add(lockjaw);
+			
+			List<Player> player1 = catalog.player().byTeam("fragnation");
+			
+	        System.out.println( "Zapisuje Lockjawa" );
+
 			
 			Statistics stats = new Statistics();
 			stats.setKills(21);
 			stats.setDeaths(10);
 			stats.getKdRatio();
 
-	        System.out.println( "Zapisuje statsy" );
 			catalog.statistics().add(stats);
+			
+			List<Statistics> statistics = catalog.statistics().byId(0);
+			
+	        System.out.println( "Zapisuje statsy" );
+
 			
 			Statistics stats1 = new Statistics();
 			stats1.setKills(50);
 			stats1.setDeaths(10);
 			stats1.getKdRatio();
 
-	        System.out.println( "Zapisuje statsy1" );
 			catalog.statistics().add(stats1);
 			
+			List<Statistics> statistics1 = catalog.statistics().byId(1);
 			
-			//Team frag = new Team();
-			//frag.setName("FragNation");
-			//frag.setCountry("Poland");
-			////////////////////////////////////////////id graczy do tabeli
+	        System.out.println( "Zapisuje statsy1" );
+			
 
-	        //System.out.println( "Zapisuje team" );
-			//teamRepo.add(frag);
+			Team frag = new Team();
+			frag.setName("FragNation");
+			frag.setCountry("Poland");
 
+			catalog.team().add(frag);
+			
+			List<Team> team = catalog.team().withName("fragnation");
+			
+	        System.out.println( "Zapisuje team" );
+
+
+			 catalog.saveAndClose();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

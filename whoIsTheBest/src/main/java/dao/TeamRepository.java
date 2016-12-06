@@ -2,14 +2,16 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.uow.IUnitOfWork;
 import model.Team;
 
-public class TeamRepository extends RepositoryBase<Team> {
+public class TeamRepository extends RepositoryBase<Team> implements ITeamRepository {
 	
-	public TeamRepository(Connection connection, IMapResultSetIntoEntity<Team> mapper) {
-		super(connection, mapper);
+	public TeamRepository(Connection connection, IMapResultSetIntoEntity<Team> mapper, IUnitOfWork uow) {
+		super(connection, mapper, uow);
 	}
 	
 	@Override
@@ -62,5 +64,9 @@ public class TeamRepository extends RepositoryBase<Team> {
 		update.setString(1, entity.getName());
 		update.setString(2, entity.getCountry());
 		update.setInt(3, entity.getId());
+	}
+	
+	public List<Team> withName(String name) {
+		return null;
 	}
 }

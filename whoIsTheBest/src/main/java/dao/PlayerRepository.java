@@ -2,14 +2,16 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 import dao.mappers.IMapResultSetIntoEntity;
+import dao.uow.IUnitOfWork;
 import model.Player;
 
-public class PlayerRepository extends RepositoryBase<Player> {
+public class PlayerRepository extends RepositoryBase<Player> implements IPlayerRepository {
 	
-	public PlayerRepository(Connection connection, IMapResultSetIntoEntity<Player> mapper) {
-		super(connection, mapper);
+	public PlayerRepository(Connection connection, IMapResultSetIntoEntity<Player> mapper, IUnitOfWork uow) {
+		super(connection, mapper, uow);
 	}
 	
 	@Override
@@ -77,5 +79,9 @@ public class PlayerRepository extends RepositoryBase<Player> {
 		update.setInt(6, entity.getPlayerStatistics());
 		update.setInt(7, entity.getTeamId());
 		update.setInt(8, entity.getId());	
+	}
+	
+	public List<Player> byTeam(String name) {
+		return null;
 	}
 }

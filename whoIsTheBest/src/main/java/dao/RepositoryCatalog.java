@@ -27,7 +27,7 @@ public class RepositoryCatalog implements IRepositoryCatalog{
 	}
 
 	public IStatisticsRepository statistics() {
-		return new StatisticsRepository(connection, new StatisticsMapper(), statistics(), uow);
+		return new StatisticsRepository(connection, new StatisticsMapper(), uow);
 	}
 
 	public ITeamRepository team() {
