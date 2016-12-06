@@ -7,7 +7,8 @@ public class Player implements IHaveId {
 	private String country;
 	private String team;
 	private int experience;
-	
+	private int teamId;
+	private int playerStatistics;
 	
 	public int getId() {
 		return id;
@@ -45,6 +46,17 @@ public class Player implements IHaveId {
 	public void setExperience(int experience) {
 		this.experience = experience;
 	}
-	
+	public int getTeamId() {
+		return teamId;
+	}
+	public void setTeamId(int teamId) {
+		this.teamId = teamId;
+	}
+	public int getPlayerStatistics() {
+		return playerStatistics;
+	}
+	public void setPlayerStatistics(int playerStatistics) {
+		this.playerStatistics = playerStatistics;
+	}
 	
 }

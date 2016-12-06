@@ -17,6 +17,10 @@ import dao.mappers.StatisticsMapper;
 import dao.mappers.TeamMapper;
 import dao.mappers.IMapResultSetIntoEntity;
 
+import dao.IRepositoryCatalog;
+import dao.RepositoryCatalog;
+import dao.uow.UnitOfWork;
+
 public class App 
 {
     public static void main( String[] args )
@@ -25,13 +29,7 @@ public class App
     	try {
 			Connection connection = DriverManager.getConnection(url);
 			
-    		IMapResultSetIntoEntity<Player> playerMapper = new PlayerMapper();
-			IMapResultSetIntoEntity<Statistics> statisticsMapper = new StatisticsMapper();
-			IMapResultSetIntoEntity<Team> teamMapper = new TeamMapper();
-			
-			PlayerRepository playerRepo = new PlayerRepository(connection, playerMapper);
-			StatisticsRepository statisticsRepo = new StatisticsRepository(connection, statisticsMapper);
-			TeamRepository teamRepo = new TeamRepository(connection, teamMapper);
+			IRepositoryCatalog catalog = new RepositoryCatalog(new UnitOfWork(connection), connection);
 			
 			Player shanger = new Player();
 			shanger.setName("Shanger");
@@ -39,27 +37,48 @@ public class App
 			shanger.setCountry("Poland");
 			shanger.setTeam("FragNation");
 			shanger.setExperience(5);
+			shanger.setPlayerStatistics(0);
+			shanger.setTeamId(0);
 
 	        System.out.println( "Zapisuje Shangera" );
-			playerRepo.add(shanger);
+			catalog.player().add(shanger);
 			
+			Player lockjaw = new Player();
+			lockjaw.setName("Lockjaw");
+			lockjaw.setAge(24);
+			lockjaw.setCountry("Poland");
+			lockjaw.setTeam("FragNation");
+			lockjaw.setExperience(3);
+			lockjaw.setPlayerStatistics(1);
+			lockjaw.setTeamId(0);
+
+	        System.out.println( "Zapisuje Lockjawa" );
+			catalog.player().add(lockjaw);
 			
 			Statistics stats = new Statistics();
 			stats.setKills(21);
 			stats.setDeaths(10);
-			stats.setKdRatio(2.10); ////////////////////chce automatyczne wyliczenie kd z metody wlozyc do tabeli
+			stats.getKdRatio();
 
 	        System.out.println( "Zapisuje statsy" );
-			statisticsRepo.add(stats);
+			catalog.statistics().add(stats);
+			
+			Statistics stats1 = new Statistics();
+			stats1.setKills(50);
+			stats1.setDeaths(10);
+			stats1.getKdRatio();
+
+	        System.out.println( "Zapisuje statsy1" );
+			catalog.statistics().add(stats1);
 			
 			
-			Team frag = new Team();
-			frag.setName("FragNation");
-			frag.setCountry("Poland");
+			//Team frag = new Team();
+			//frag.setName("FragNation");
+			//frag.setCountry("Poland");
 			////////////////////////////////////////////id graczy do tabeli
 
-	        System.out.println( "Zapisuje team" );
-			teamRepo.add(frag);
+	        //System.out.println( "Zapisuje team" );
+			//teamRepo.add(frag);
 
 		} catch (SQLException e) {
 			e.printStackTrace();

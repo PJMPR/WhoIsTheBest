@@ -26,12 +26,14 @@ public class PlayerRepository extends RepositoryBase<Player> {
 				+ "country VARCHAR(20),"
 				+ "team VARCHAR(20),"
 				+ "experience INT,"
+				+ "playerStatistics INT,"
+				+ "teamId INT,"
 				+ ")";
 	}
 	
 	@Override
 	protected String insertSql() {
-		return "INSERT INTO player(name,age,country,team,experience) VALUES(?,?,?,?,?)";
+		return "INSERT INTO player(name,age,country,team,experience,playerStatistics,teamId) VALUES(?,?,?,?,?,?,?)";
 	}
 	
 	@Override
@@ -41,7 +43,7 @@ public class PlayerRepository extends RepositoryBase<Player> {
 	
 	@Override
 	protected String updateSql() {
-		return "UPDATE player set name=?, age=?, country=?, team=?, experience=? WHERE id=?";
+		return "UPDATE player set name=?, age=?, country=?, team=?, experience=?, playerStatistics=?, teamId=? WHERE id=?";
 	}
 	
 	@Override
@@ -61,6 +63,8 @@ public class PlayerRepository extends RepositoryBase<Player> {
 		insert.setString(3, entity.getCountry());
 		insert.setString(4, entity.getTeam());
 		insert.setInt(5, entity.getExperience());
+		insert.setInt(6, entity.getPlayerStatistics());
+		insert.setInt(7, entity.getTeamId());
 	}
 	
 	@Override
@@ -70,6 +74,8 @@ public class PlayerRepository extends RepositoryBase<Player> {
 		update.setString(3, entity.getCountry());
 		update.setString(4, entity.getTeam());
 		update.setInt(5, entity.getExperience());
-		update.setInt(6, entity.getId());	
+		update.setInt(6, entity.getPlayerStatistics());
+		update.setInt(7, entity.getTeamId());
+		update.setInt(8, entity.getId());	
 	}
 }

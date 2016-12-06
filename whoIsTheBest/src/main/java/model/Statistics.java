@@ -32,6 +32,4 @@ public class Statistics implements IHaveId {
 	public void setKdRatio(double kdRatio) {
 		this.kdRatio = kdRatio;
 	}
-	
-	
 }

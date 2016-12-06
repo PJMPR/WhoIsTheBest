@@ -16,6 +16,8 @@ public class PlayerMapper implements IMapResultSetIntoEntity<Player>{
 		p.setCountry(rs.getString("country"));
 		p.setTeam(rs.getString("team"));
 		p.setExperience(rs.getInt("experience"));
+		p.setTeamId(rs.getInt("teamId"));
+		p.setPlayerStatistics(rs.getInt("playerStatistics"));
 		return p;
 	}
 }

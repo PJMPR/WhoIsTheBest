@@ -13,7 +13,6 @@ public class TeamMapper implements IMapResultSetIntoEntity<Team> {
 		p.setId(rs.getInt("id"));
 		p.setName(rs.getString("name"));
 		p.setCountry(rs.getString("country"));
-		//p.setPlayers(rs.getPlayers().getId("player_id"));///////////////////////// ?????
 		return p;
 	}
 }

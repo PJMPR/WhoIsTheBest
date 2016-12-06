@@ -1,11 +1,12 @@
 package model;
 
+import java.util.List;
+
 public class Team  implements IHaveId{
 	private int id;
 	private String name;
 	private String country;
-	private Player players;
-	
+	private List<Player> players;
 	
 	public int getId() {
 		return id;
@@ -25,12 +26,10 @@ public class Team  implements IHaveId{
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	public Player getPlayers() {
+	public List<Player> getPlayers() {
 		return players;
 	}
-	public void setPlayers(Player players) {
+	public void setPlayers(List<Player> players) {
 		this.players = players;
 	}
-	
-	
 }
